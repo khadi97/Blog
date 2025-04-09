@@ -1,0 +1,25 @@
+<html lang="en">
+<head>
+    <title>Document</title>
+    <%- include('partials/head.ejs') %>
+</head>
+<body>
+    <%- include('partials/header.ejs') %>
+    <div class="container">
+        <div class="main-form">
+            <form action="/api/signin" method="POST" class="form">
+                <h3>Вход</h3>
+                <fieldset class="fieldset">
+                    <input type="email" placeholder="Введите email" name="email">
+                </fieldset>
+                <fieldset class="fieldset">
+                    <input type="password" placeholder="Введите пароль" name="password">
+                </fieldset>
+                <fieldset class="fieldset">
+                    <button type="submit">Войти</button>
+                </fieldset>
+            </form>
+        </div>   
+    </div>
+</body>
+</html>

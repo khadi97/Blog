@@ -1,0 +1,62 @@
+<html lang="en">
+<head>
+    <title>Document</title>
+    <%- include('partials/head.ejs') %>
+</head>
+<body>
+    <%- include('partials/header.ejs') %>
+
+    <div class="container">
+        <div class="main">
+            <div class="main-contents">
+                <div class="main-title">
+                    <h2>Блоги по программированию</h2>
+                    <p>Популярные и лучшие публикации по программированию для начинающих
+                    и профессиональных программистов и IT-специалистов.</p>
+                </div>
+                <%
+                blogs.forEach(item => { 
+            %>
+            <div class="main-content">
+                <img src="<%=item.image%>" alt="item1">
+                <div class='more-param'>
+                    <h3><%=item.title%></h3>
+                    <div class="more" onclick="moreFunctions()">
+                        <img src="/images/icons/vector.svg" alt='vector'>
+                        Еще
+                        <div class="editOrDelete">
+                            <a href="">Редактировать</a>
+                            <a href="">Удалить</a>
+                        </div>
+                    </div>
+                </div>
+                <p><%=item.description%></p>
+            </div>
+            <div class="main-content-info">
+                <div class="content-date"><img src='/images/icons/date.svg' alt="date">26.06.20</div>
+                <div class="content-visibility"><img src='/images/icons/visibility.svg' alt="visibility">21</div>
+                <div class="content-message"><img src='/images/icons/message.svg' alt="message">4</div>
+                <div class="content-forum">
+                    <div><img src='/images/icons/forums.svg' alt="forums"><%=item.category.name%></div>
+                    <div><img src='/images/icons/person.svg' alt="person"><%=item.author.email%></div>
+                </div>
+            </div>
+            <%
+                })
+            %>  
+            </div>
+            <div class="categories">
+                <h2>Категории</h2>
+                <% 
+                    categories.forEach(category => {
+                %>
+                    <a href="/<%=category.key%>"><%= category.name %> </a>
+                <%
+                    }) 
+                %>
+                    
+            </div>
+        </div>
+    </div>
+</body>
+</html>

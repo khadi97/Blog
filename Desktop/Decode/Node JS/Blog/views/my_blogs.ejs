@@ -1,0 +1,66 @@
+<html lang="en">
+<head>
+    <title>Document</title>
+    <%- include('partials/head.ejs') %>
+</head>
+<body>
+    <%- include('partials/header.ejs') %>
+
+    <div class="container">
+        <div class="main">
+            <div class="main-contents">
+                <div class="main-title --myBlog">
+                    <h2>Мои блоги</h2>
+                    <a href="/new_blogs">Новый блог</a>
+                </div>
+                <%
+                    blogs.forEach(item => { 
+                %>
+                <div class="main-content">
+                    <img src="<%=item.image%>" alt="item1">
+                    <div class='more-param'>
+                        <h3><%=item.title%></h3>
+                        <div class="more" onclick="moreFunctions()">
+                            <img src="/images/icons/vector.svg" alt='vector'>
+                            Еще
+                            <div class="editOrDelete">
+                                <a href="/edit_blogs/<%=item._id%>">Редактировать</a>
+                                <a href="">Удалить</a>
+                            </div>
+                        </div>
+                    </div>
+                    <p><%=item.description%></p>
+                </div>
+                <div class="main-content-info">
+                    <div class="content-date"><img src='/images/icons/date.svg' alt="date">26.06.20</div>
+                    <div class="content-visibility"><img src='/images/icons/visibility.svg' alt="visibility">21</div>
+                    <div class="content-message"><img src='/images/icons/message.svg' alt="message">4</div>
+                    <div class="content-forum">
+                        <div><img src='/images/icons/forums.svg' alt="forums"><%=item.category.name%></div>
+                        <div><img src='/images/icons/person.svg' alt="person"><%=item.author.email%></div>
+                    </div>
+                </div>
+                <%
+                    })
+                %>
+            </div>
+            <div class="profile">
+                <img src="/images/profiles/avatar.png" alt="avatar">
+                <h3><%=user.fullname%></h3>
+                <p>В основном пишу про веб - разработку, на React & Redux</p>
+                <p>285 постов за все время</p>
+                <%
+                    if(loginUser.id == user.id){
+                %>
+                    <a href="">Редактировать</a>
+                <%
+                    }
+                %>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/moreFunctions.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+<header>
+    <div class="head-logo">
+        <a href='/'><h1>Decode Blog</h1></a>
+    </div>
+    <div class="head-search">
+        <input type="text" placeholder="Поиск по блогам">
+        <button class="search-btn">
+            <img src="/images/icons/search.svg" alt="search">
+            Найти
+        </button> 
+    </div>
+    <div class="head-buttons">
+        <!-- если у юзера есть все данные, то отображаем аву и кнопку выхода, иначе кнопку рестарций и входа-->
+        <%
+            if (user._id) {
+        %>
+            <div class="head-profile">
+                <a href="/my_blogs/<%=user._id%>"><img src="/images/profiles/avatar.svg" alt="avatar"></a> 
+                <a href="/api/signout" class="logout-btn">Выход</a>
+            </div>
+        <% } else { 
+        %>
+            <a href="/register" class="register-btn">Регистрация</a>
+            <a href="/login" class="login-btn">Вход</a>
+        <% }
+         %>    
+    </div>
+</header>
