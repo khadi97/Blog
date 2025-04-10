@@ -1,0 +1,49 @@
+Полезные ссылки: нажмите на ссылку https://www.kinopoisk.ru/ , чтобы открыть ресурс.
+Шрифт: https://www.onlinewebfonts.com/download/a1750a4dae8db954fdd595f313b3b34e 
+
+npm init
+npm i nodemon express mongoose ejs
+
+в браузере чтобы открыть dev tools: command + option + i
+
+! header.css в папке components потому что он является статичным (компонентом), те будет во всех страницах
+
+! в head.ejs переносим все что находиться в файле index.ejs <head> кроме <title>
+
+<%- include('/partials/head.ejs') %>  - подключение ejs файла
+
+
+/server/Genres/seed.js - автоматическое заполнение нашей базы
+
+После верстки всех страниц
+- Подключаем к бд mongoose
+- рендеринг страниц делаем в отдельном файле
+
+В терминале сmd:
+1) mongosh
+2) show dbs
+3) use kinopoisk
+4) show collections
+5) db.genres.find()
+6) db.films.deleteOne({_id: ''})
+
+npm i bcrypt - библиотека для хэширования пароля
+
+https://www.makeuseof.com/nodejs-bcrypt-hash-verify-salt-password/ -для хэширования пароля 4пункт используем
+
+https://www.npmjs.com/package/bcrypt?activeTab=readme - для сравнения паролей
+
+https://www.passportjs.org/concepts/authentication/logout/ - для logout
+
+npm i express-session - хранилища информации о том какой пользователь зашел в свой аккаунт или какой пользователь сидит онлайн под данным десктопом
+npm i connect-mongo - чтобы хранить данные о сессий в mongodb
+npm i passport - для сопоставления паролей
+npm i passport-local
+
+
+!Для загрузки файлов используем библиотеку multer
+npm i multer
+
+!Для editFilm при редактирований для удаления картинки нужны эти библиотеки
+npm i fs
+npm i path

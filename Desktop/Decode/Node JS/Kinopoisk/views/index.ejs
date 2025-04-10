@@ -1,0 +1,58 @@
+<!-- ! + enter -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+    <%- include('partials/head.ejs') %> 
+</head>
+<body>
+    <%- include('partials/header.ejs') %> 
+    <div class="container">
+        <div class="main">
+            <div class="categories">
+                <h3>Жанры</h3>
+                <% genres.forEach(genre => {
+                %>
+                <a href="/<%=genre.key%>"><%= genre.name %> </a>
+                <%
+                }) %>   
+            </div>
+            <div class="main-content">
+                <h3>Фильмы и сериалы</h3>
+                <%
+                    films.forEach(item => {
+                %>
+                <div class="main-card">
+                    <div class="card-left">
+                        <div class="film-img">
+                            <img src="<%=item.image%>" alt="film1">
+                        </div>
+                        <div class="film-info">
+                            <a href=""><%=item.titleRus%></a>
+                            <a href=""><%=item.titleEng%>, <%=item.year%>, <%=item.time%>мин</a>
+                            <a href=""><%=item.country.name%>, <%=item.genre.name%></a>
+                            <button class="film-btn">
+                                <img src="/images/icons/play.svg" alt="play">
+                                Смотреть
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-right">
+                        <div class="film-rate">
+                            <p>7.3</p>
+                        </div>
+                        <button class="film-btn">
+                            <img src="/images/icons/save.svg" alt="save">
+                            Буду смотреть
+                        </button>
+                    </div>
+                </div>
+                <%
+                    })
+                %>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

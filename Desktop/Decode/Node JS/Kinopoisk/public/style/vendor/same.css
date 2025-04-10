@@ -1,0 +1,7 @@
+.container{
+    padding: 100px 5% 50px;
+    background-color: #f4f4f4;
+    min-height: 100vh; /* минимум 100% видимого окна*/
+    box-sizing: border-box; /* чтобы пока не было скролинга*/
+
+}
