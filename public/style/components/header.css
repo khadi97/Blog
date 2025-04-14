@@ -1,0 +1,98 @@
+header{
+    padding: 30px 5%;
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    font-family: 'Roboto-Medium', sans-serif;
+    z-index: 10;
+}
+
+.head-logo a{
+    text-decoration: none;
+    color: #00A2DC;
+    font-size: 50px;
+}
+
+.head-search{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.head-search input{
+    height: 50px;
+    padding: 0 20px;
+    width: 321px;
+    background-color: #FFF;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border: 1px #E7E7E7 solid;
+    outline: none;
+    color:#0000008A;
+    font-size: 16px;
+    font-family: "Roboto-Light";
+}
+
+.search-btn{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: 91px;
+    height: 50px;
+    background-color: #00A2DC;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border: 1px #00A2DC solid;
+    color: #FFF;
+    font-size: 16px;
+}
+
+.head-buttons{
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.register-btn,
+.login-btn{
+    height: 50px;
+    width: 125px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #00A2DC;
+    text-decoration: none;
+    border-radius: 4px;
+    border: 1px #00A2DC solid;
+    color: #FFF;
+    font-size: 16px;
+}
+
+.head-profile{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.head-buttons a img{
+    border: 100%;
+    box-sizing: border-box;
+}
+
+.logout-btn{
+    text-decoration: none;
+    font-size: 16px;
+    font-family: "Roboto-Medium";
+    color: #00A2DC;
+    transition: 0.4s;
+}
+ 
+.logout-btn:hover{
+    color: red;
+}

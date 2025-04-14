@@ -1,0 +1,40 @@
+<html lang="en">
+<head>
+    <title>Document</title>
+    <%- include('partials/head.ejs') %>
+</head>
+<body>
+    <%- include('partials/header.ejs') %>
+    <div class="container">
+        <div class="main-form-blog">
+            <form action="/api/blogs/edit"  method='POST' class="form-blog" enctype="multipart/form-data">
+                <h2>Новый блог</h3>
+                <input type="hidden" value="<%=blogs._id%>"" name="id"> 
+                <input type="text" value='<%=blogs.title%>' placeholder="Введите заголовок блога" name="title">
+                <select name="category" id="">
+                    <!-- <option value="">Выберите категорию</option> -->
+                    <% categories.forEach(category => {
+                        if(category.id == blogs.category){
+                    %>
+                        <option value="<%=category._id%>" selected><%=category.name%></option>
+                    <%
+                        }else{
+                    %>
+                        <option value="<%=category._id%>"><%=category.name%></option>
+
+                    <%
+                            }
+                        })
+                    %>
+                </select>
+                <input type="file" id="file-upload" name="image"/>
+                <!-- <button class="btn-file-upload">Выберите картину</button> -->
+                <div class="form-description">
+                    <input type="text" value='<%=blogs.description%>' placeholder="Введите описание блога" name="description">
+                </div>
+                <button class="btn-create" type="submit">Создать</button>
+            </form>
+        </div>
+    </div>  
+</body>
+</html>

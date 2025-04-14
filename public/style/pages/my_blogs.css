@@ -1,0 +1,110 @@
+.--myBlog{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.--myBlog a{
+    background-color: #00A2DC;
+    color: #fff;
+    padding: 15px 15px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-family: 'Roboto-Medium';
+}
+
+.main-content img{
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.more-param{
+    display: flex;
+    justify-content: space-between;
+}
+
+.more{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    position: relative;
+}
+
+.more img{
+    width: 10%;
+}
+
+.editOrDelete{
+    position: absolute;
+    display: none;
+}
+
+.editOrDelete a{
+    color: #000;
+    text-decoration: none;   
+    font-size: 16px;
+    font-family: "Roboto-Medium";
+    text-align: left;
+    padding: 5px 0;
+}
+
+.editOrDelete a:last-child{
+    color: #FF0000;
+}
+
+.active{
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+    padding: 10px 15px;
+    position: absolute;
+    width: 150px;
+    top: 60px;
+    right: 0;
+}
+
+.profile{
+    padding: 40px 25px;
+    background-color: #FFF;
+    width: 25%;
+    height: fit-content;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+}
+
+.profile img{
+    width: 72%;
+    box-sizing: border-box;
+    display: flex;
+}
+
+.profile h3{
+    margin: 25px 0 28px;
+    font-size: 16px;
+    font-family: 'Roboto-Medium';
+}
+
+.profile p{
+    margin-bottom: 30px;
+    font-size: 16px;
+    font-family: 'Roboto-Light';
+    text-align: center;
+}
+
+.profile a{
+    background-color: #00A2DC;
+    color: #fff;
+    padding: 15px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-family: 'Roboto-Medium';
+}
+
+

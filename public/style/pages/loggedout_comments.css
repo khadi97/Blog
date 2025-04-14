@@ -1,0 +1,21 @@
+.send-comment{
+    background-color:#FFF3CD;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    padding: 25px 20px;
+    margin-top: 30px;
+}
+
+.send-comment p{
+    font-size: 16px;
+    font-family: "Roboto-Medium";
+    color: #856404;
+}
+
+.send-comment p a{
+    font-size: 16px;
+    font-family: "Roboto-Medium";
+    text-decoration: none;
+    color: #00A2DC;
+}

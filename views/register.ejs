@@ -1,0 +1,32 @@
+<html lang="en">
+<head>
+    <title>Document</title>
+    <%- include('partials/head.ejs') %>
+</head>
+<body>
+    <%- include('partials/header.ejs') %>
+    <div class="container">
+        <div class="main-form">
+            <form action="/api/signup" method="POST" class="form">
+                <h3>Регистрация</h3>
+                <fieldset class="fieldset">
+                    <input type="email" placeholder="Введите email" name="email">
+                </fieldset>
+                <fieldset class="fieldset">
+                    <input type="text" placeholder="Введите полное имя" name="fullname">
+                </fieldset>
+                <fieldset class="fieldset">
+                    <input type="password" placeholder="Введите пароль" name="password">
+                </fieldset>
+                <fieldset class="fieldset">
+                    <input type="password" placeholder="Подтвердите пароль" name="re_password">
+                </fieldset>
+                <fieldset class="fieldset">
+                    <button type="submit">Зарегистрироваться</button>
+                    <!-- <a href="">Зарегистрироваться</a> -->
+                </fieldset>
+            </form>
+        </div>   
+    </div>
+</body>
+</html>
