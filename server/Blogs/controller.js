@@ -56,5 +56,18 @@ const editBlog = async(req, res) => {
         }
 }
 
+const deleteBlog = async(req, res) => {
+    //находим блог, он существует или нет
+    const blog = await Blog.findById(req.params.id)
+    if(blog){// если все успешно
+        fs.unlinkSync(path.join(__dirname + '../../../public' + blog.image))
+        //команда удаления
+        await Blog.deleteOne({_id: req.params.id})
+        res.status(200).send('ok')
+    } else {
+        res.status(404).send('Not found')
+    }
+}
 
-module.exports = { createBlog, editBlog };
+
+module.exports = { createBlog, editBlog, deleteBlog};

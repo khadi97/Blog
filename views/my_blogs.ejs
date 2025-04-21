@@ -20,12 +20,12 @@
                     <img src="<%=item.image%>" alt="item1">
                     <div class='more-param'>
                         <h3><%=item.title%></h3>
-                        <div class="more" onclick="moreFunctions()">
+                        <div class="more" onclick="moreFunctions(event)">
                             <img src="/images/icons/vector.svg" alt='vector'>
                             Еще
                             <div class="editOrDelete">
                                 <a href="/edit_blogs/<%=item._id%>">Редактировать</a>
-                                <a href="">Удалить</a>
+                                <a onclick="deleteBlogs('<%=item._id%>', '<%=item.author._id%>')">Удалить</a>
                             </div>
                         </div>
                     </div>
@@ -60,7 +60,12 @@
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.8.4/axios.min.js" 
+    integrity="sha512-2A1+/TAny5loNGk3RBbk11FwoKXYOMfAK6R7r4CpQH7Luz4pezqEGcfphoNzB7SM4dixUoJsKkBsB6kg+dNE2g==" 
+    crossorigin="anonymous" 
+    referrerpolicy="no-referrer"></script>
     <script src="/js/moreFunctions.js"></script>
+    <script src="/js/deleteBlog.js"></script>
 
 </body>
 </html>
