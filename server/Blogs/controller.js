@@ -3,9 +3,9 @@ const fs = require('fs')
 const path = require('path')
 
 const createBlog = async(req, res) => {
-    console.log('Request body:', req.body); // Выводим тело запроса для отладки
+    console.log('Request body:', req.body); //Выводим тело запроса для отладки
 
-    // Проверка на наличие данных
+    //Проверка на наличие данных
     if (
         req.file &&
         req.body.title && req.body.title.length > 2 &&
@@ -21,40 +21,63 @@ const createBlog = async(req, res) => {
                 author: req.user._id
             });
 
-            // Сохраняем блог в базе данных
+            //Сохраняем блог в базе данных
             await newBlog.save();
 
             res.redirect(`/my_blogs/${req.user._id}`);
         } catch (error) {
             console.error("Error saving blog:", error);
-            res.redirect('/new?error=2');  // Переадресация с ошибкой
+            res.redirect('/new_blogs?error=2');  // Переадресация с ошибкой
         }
     } else {
-        res.redirect('/new?error=1');
+        res.redirect('/new_blogs?error=1');
     }
 };
 
 
-const editBlog = async(req, res) => {
-     if(req.file &&
-        req.body.title.length > 2 &&
-        req.body.category.length > 0 &&
-        req.body.description.length > 2)
-        {
-            const blog = await Blog.findById(req.body.id)
-            fs.unlinkSync(path.join(__dirname + '../../../public' + blog.image))
-            await Blog.findByIdAndUpdate(req.body.id, {
-                title: req.body.title,
-                category: req.body.category,
-                description: req.body.description,
-                image: `/images/items/${req.file.filename}`,
-                author: req.user._id
-            })
-            res.redirect('/my_blogs/' + req.user._id)
-        } else {
-            res.redirect(`/edit_blogs/${req.body.id}?error=1`)
+const editBlog = async (req, res) => {
+    try {
+        const { id, title, category, description } = req.body;
+
+        //Проверка валидности входных данных
+        if (!title || title.length < 3 ||
+            !category || category.length < 1 ||
+            !description || description.length < 3) {
+            return res.redirect(`/edit_blogs/${id}?error=1`);
         }
+
+        //Находим блог
+        const blog = await Blog.findById(id);
+        if (!blog) {
+            return res.redirect(`/edit_blogs/${id}?error=notfound`);
+        }
+
+        //Данные для обновления
+        const updatedData = {
+            title,
+            category,
+            description,
+            author: req.user._id // не обязательно, но если нужно обновить
+        };
+
+        //Если загружено новое изображение — заменяем
+        if (req.file) {
+            const oldImagePath = path.join(__dirname, '../../public', blog.image);
+            if (fs.existsSync(oldImagePath)) {
+                fs.unlinkSync(oldImagePath);
+            }
+            updatedData.image = `/images/items/${req.file.filename}`
+        }
+
+        //Обновляем блог
+        await Blog.findByIdAndUpdate(id, updatedData);
+        res.redirect(`/my_blogs/${req.user._id}`)
+    } catch (error) {
+        console.error('Ошибка при редактировании блога:', error)
+        res.redirect(`/edit_blogs/${req.body.id}?error=2`)
+    }
 }
+
 
 const deleteBlog = async(req, res) => {
     //находим блог, он существует или нет

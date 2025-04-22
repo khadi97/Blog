@@ -53,6 +53,7 @@ const signOut = (req, res) => {
         // Если при выходе возникла ошибка, она будет выведена в консоль.
         if(err){
             console.log(err);
+            return res.redirect('/?error=logout');
         }
     })
     res.redirect('/') //редиректим на глав страницу после выхода юзера из своего аккаунта

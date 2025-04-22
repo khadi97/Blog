@@ -33,9 +33,7 @@ router.get('/my_blogs/:id', async (req, res) => {
         }
 
         // Ищем блоги этого пользователя
-        const blogs = await Blog.find({ author: user._id })
-            .populate('category')
-            .populate('author');
+        const blogs = await Blog.find({ author: user._id }).populate('category').populate('author');
 
         // Отправляем данные в шаблон
         res.render('my_blogs', {
@@ -81,5 +79,19 @@ router.get('/edit_blogs/:id', async(req, res) => {
 router.get('/not_found', (req, res) => {
     res.render('not_found')
 })
+
+
+router.get('/blog_details/:id', async(req, res) => {
+    const blog = await Blog.findById(req.params.id).populate('category').populate('author')
+
+    if (!blog){
+        return res.redirect('/not_found')
+    }
+
+    const allCategories = await Categories.find()
+
+    res.render('blog_details', {item: blog, categories: allCategories, user: req.user ? req.user : {}})
+})
+
 
 module.exports = router;
