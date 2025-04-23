@@ -7,7 +7,7 @@
     <%- include('partials/header.ejs') %>
 
     <div class="container">
-        <div class="main">
+        <div class="main-form-blog">
             <div class="main-contents">
                 <div class="main-content">
                     <h3><%=item.title%></h3>
@@ -35,18 +35,6 @@
                         <div><img src='/images/icons/person.svg' alt="person"><%=item.author.email%></div>
                     </div>
                 </div>
-            </div>
-      
-                  
-            <div class="categories">
-                <h2>Категории</h2>
-                <% 
-                    categories.forEach(category => {
-                %>
-                    <a href="/<%=category.key%>"><%= category.name %> </a>
-                <%
-                    }) 
-                %>
             </div>
         </div>
     </div>

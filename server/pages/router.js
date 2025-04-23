@@ -1,28 +1,41 @@
 const express = require('express')
+const mongoose = require('mongoose')
 const router = express.Router();
 const Categories = require('../Categories/Categories')
 const User = require('../auth/User')
 const Blog = require('../Blogs/Blog')
 
 router.get('/', async(req, res) => {
-    const allCategories = await Categories.find()
-    const blogs = await Blog.find().populate('category').populate('author')
+    const options = {};
+    const { catId } = req.query;
+    let selectedCategory = null; 
 
-    res.render('index', {categories: allCategories, user: req.user ? req.user : {}, blogs}) //при рендеринге каждой страницы отправляю юзера
-})
+    // Если catId передан, фильтруем блоги по этой категории
+    if (catId) {
+        const category = await Categories.findOne({ key: catId });
+        if (category) {
+            options.category = category._id; 
+            selectedCategory = catId;  // Устанавливаем выбранную категорию
+        }
+    }
+
+    const allCategories = await Categories.find()
+    const blogs = await Blog.find(options).populate('category').populate('author')
+    res.render('index', {categories: allCategories, user: req.user ? req.user : {}, blogs, selectedCategory}) //при рендеринге каждой страницы отправляю юзера
+});
+
 
 router.get('/login', (req, res) => {
     res.render('login', {user: req.user ? req.user : {}})
-})
+});
 
 router.get('/register', (req, res) => {
     res.render('register', {user: req.user ? req.user : {}})
-})
+});
 
 
 router.get('/my_blogs/:id', async (req, res) => {
     const allCategories = await Categories.find();
-
     try {
         // Ищем пользователя по ID, переданному в URL
         const user = await User.findById(req.params.id);
@@ -51,47 +64,67 @@ router.get('/my_blogs/:id', async (req, res) => {
 
 router.get('/new_blogs', async(req, res) => {
     const allCategories = await Categories.find()
-
     res.render('new_blogs', {categories: allCategories, user: req.user ? req.user : {}})
-})
+});
 
 
 router.get('/profile_comments', async(req, res) => {
-    const allCategories = await Categories.find()
+    const options = {};
+    const { catId } = req.query;
+    let selectedCategory = null; 
+    if (catId) {
+        const category = await Categories.findOne({ key: catId });
+        if (category) {
+            options.category = category._id; 
+            selectedCategory = catId;  
+        }
+    }
 
-    res.render('profile_comments', {categories: allCategories, user: req.user ? req.user : {}})
-})
+    const allCategories = await Categories.find()
+    const blogs = await Blog.find(options).populate('category').populate('author')
+    res.render('profile_comments', {categories: allCategories, user: req.user ? req.user : {}, blogs, selectedCategory })
+});
 
 
 router.get('/loggedout_comments', async(req, res) => {
-    const allCategories = await Categories.find()
+    const options = {};
+    const { catId } = req.query;
+    let selectedCategory = null; 
+    if (catId) {
+        const category = await Categories.findOne({ key: catId });
+        if (category) {
+            options.category = category._id; 
+            selectedCategory = catId;  
+        }
+    }
 
-    res.render('loggedout_comments', {categories: allCategories, user: req.user ? req.user : {}})
-})
+    const allCategories = await Categories.find()
+    const blogs = await Blog.find(options).populate('category').populate('author')
+    res.render('loggedout_comments', {categories: allCategories, user: req.user ? req.user : {}, blogs, selectedCategory})
+});
+
 
 router.get('/edit_blogs/:id', async(req, res) => {
     const allCategories = await Categories.find()
     const blogs = await Blog.findById(req.params.id)
-
     res.render('edit_blogs', {categories: allCategories, user: req.user ? req.user : {}, blogs}) //при рендеринге каждой страницы отправляю юзера
-})
+});
+
 
 router.get('/not_found', (req, res) => {
     res.render('not_found')
-})
+});
 
 
 router.get('/blog_details/:id', async(req, res) => {
     const blog = await Blog.findById(req.params.id).populate('category').populate('author')
-
     if (!blog){
         return res.redirect('/not_found')
     }
 
     const allCategories = await Categories.find()
-
     res.render('blog_details', {item: blog, categories: allCategories, user: req.user ? req.user : {}})
-})
+});
 
 
 module.exports = router;
