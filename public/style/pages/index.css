@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+}
+
 .main{
     display: flex;
     justify-content: space-between;
@@ -95,4 +99,41 @@
 
 .categories a:hover{
     border-bottom: 2px #007BFF solid;
+}
+
+/* Стиль для пагинации */
+.pages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+
+/* Стиль для пагинации */
+.pages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.pages a {
+    padding: 10px 10px;
+    color: #000;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.pages a:hover {
+    color:#007BFF;
+    transform: scale(1.1); /* Эффект увеличения при наведении */
+}
+
+.pages a.active {
+    color: #007BFF;  /* Красный цвет для активной страницы */
+    
+}
+
+.pages a:focus {
+    outline: none;
 }

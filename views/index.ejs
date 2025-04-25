@@ -15,36 +15,52 @@
                     и профессиональных программистов и IT-специалистов.</p>
                 </div>
                 <%
-                blogs.forEach(item => { 
-            %>
-            <div class="main-content">
-                <img src="<%=item.image%>" alt="item1">
-                <div class='more-param'>
-                    <h3><%=item.title%></h3>
-                    <div class="more" onclick="moreFunctions()">
-                        <img src="/images/icons/vector.svg" alt='vector'>
-                        Еще
-                        <div class="editOrDelete">
-                            <a href="">Редактировать</a>
-                            <a href="">Удалить</a>
+                    blogs.forEach(item => { 
+                %>
+                <div class="main-content">
+                    <img src="<%=item.image%>" alt="item1">
+                    <div class='more-param'>
+                        <h3><%=item.title%></h3>
+                        <div class="more" onclick="moreFunctions()">
+                            <img src="/images/icons/vector.svg" alt='vector'>
+                            Еще
+                            <div class="editOrDelete">
+                                <a href="">Редактировать</a>
+                                <a href="">Удалить</a>
+                            </div>
                         </div>
                     </div>
+                    <p><%=item.description%></p>
                 </div>
-                <p><%=item.description%></p>
-            </div>
-            <div class="main-content-info">
-                <div class="content-date"><img src='/images/icons/date.svg' alt="date">26.06.20</div>
-                <div class="content-visibility"><img src='/images/icons/visibility.svg' alt="visibility">21</div>
-                <div class="content-message"><img src='/images/icons/message.svg' alt="message">4</div>
-                <div class="content-forum">
-                    <div><img src='/images/icons/forums.svg' alt="forums"><%=item.category.name%></div>
-                    <div><img src='/images/icons/person.svg' alt="person"><%=item.author.email%></div>
+                <div class="main-content-info">
+                    <div class="content-date"><img src='/images/icons/date.svg' alt="date">26.06.20</div>
+                    <div class="content-visibility"><img src='/images/icons/visibility.svg' alt="visibility">21</div>
+                    <div class="content-message"><img src='/images/icons/message.svg' alt="message">4</div>
+                    <div class="content-forum">
+                        <div><img src='/images/icons/forums.svg' alt="forums"><%=item.category.name%></div>
+                        <div><img src='/images/icons/person.svg' alt="person"><%=item.author.email%></div>
+                    </div>
+                </div>
+                <%
+                    })
+                %>  
+
+                 <!-- Пагинация -->
+                 <div class="pages">
+                    <%
+                        let queryString = '';
+                        if (locals.search) queryString += `search=${locals.search}&`;
+                        if (locals.selectedCategory) queryString += `catId=${locals.selectedCategory}&`;
+
+                        const currentPage = locals.currentPage || 0;
+
+                        for (let i = 0; i < pages; i++) {
+                    %>
+                    <a href="?<%= queryString %>page=<%= i %>"><%= i + 1 %></a>
+                    <% } %>
                 </div>
             </div>
-            <%
-                })
-            %>  
-            </div>
+
             <div class="categories">
                 <h2>Категории</h2>
                 <a href="/" class="<%= !selectedCategory ? 'selected' : '' %>">Все категории</a>
@@ -57,5 +73,6 @@
             </div>
         </div>
     </div>
+    
 </body>
 </html>
