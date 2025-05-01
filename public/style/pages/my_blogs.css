@@ -28,6 +28,10 @@
     justify-content: space-between;
 }
 
+.more-param a:hover{
+    color: purple;
+}
+
 .more{
     display: flex;
     justify-content: space-between;
@@ -71,6 +75,7 @@
     right: 0;
 }
 
+
 .profile{
     padding: 40px 25px;
     background-color: #FFF;
@@ -102,6 +107,7 @@
     text-align: center;
 }
 
+
 .profile a{
     background-color: #00A2DC;
     color: #fff;
@@ -111,5 +117,6 @@
     font-size: 16px;
     font-family: 'Roboto-Medium';
 }
+
 
 

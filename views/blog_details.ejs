@@ -10,11 +10,9 @@
         <div class="main-form-blog">
             <div class="main-contents">
                 <div class="main-content">
-                    <h3><%=item.title%></h3>
                     <img src="<%=item.image%>" alt="item1">
-
-                    <!-- <div class='more-param'>
-                        
+                    <div class='more-param'>
+                        <h3><%=item.title%></h3>
                         <div class="more" onclick="moreFunctions(event)">
                             <img src="/images/icons/vector.svg" alt='vector'>
                             Еще
@@ -23,9 +21,9 @@
                                 <a onclick="deleteBlogs('<%=item._id%>', '<%=item.author._id%>')">Удалить</a>
                             </div>
                         </div>
-                    </div> -->
+                    </div>
                     <p><%=item.description%></p>
-                </div> 
+                </div>
                 <div class="main-content-info">
                     <div class="content-date"><img src='/images/icons/date.svg' alt="date">26.06.20</div>
                     <div class="content-visibility"><img src='/images/icons/visibility.svg' alt="visibility">21</div>
@@ -34,6 +32,32 @@
                         <div><img src='/images/icons/forums.svg' alt="forums"><%=item.category.name%></div>
                         <div><img src='/images/icons/person.svg' alt="person"><%=item.author.email%></div>
                     </div>
+                </div>
+
+                <div class="comments">
+                    <h3>Комментарий</h3>
+                    <% 
+                        if(user && user._id){
+                    %>
+                    
+                    <form action="" class="add-comment-form">                
+                        <p>Напишите комментарий</p>
+                        <textarea name="text"></textarea>
+                        <button>Сохранить</button>
+                    </form>
+                    <%
+                        } else {
+                    %>
+                    <p class="comment-message">
+                        Чтобы оставить комментарий 
+                        <a href='/register'>зарегистрируйтесь</a>
+                        , или 
+                        <a href='/login'>войдите</a>
+                        в аккаунт.
+                    </p>
+                    <%
+                        }
+                    %>
                 </div>
             </div>
         </div>

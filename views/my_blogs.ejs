@@ -43,6 +43,22 @@
                 <%
                     })
                 %>
+
+                <!-- Пагинация -->
+                <div class="pages">
+                <%
+                    let queryString = '';
+                    if (locals.search) queryString += `search=${locals.search}&`;
+                    if (locals.selectedCategory) queryString += `catId=${locals.selectedCategory}&`;
+
+                    const currentPage = locals.currentPage || 0;
+
+                    for (let i = 0; i < pages; i++) {
+                %>
+                <a href="?<%= queryString %>page=<%= i %>"><%= i + 1 %></a>
+                <% } %>
+                
+            </div>
             </div>
             <div class="profile">
                 <img src="/images/profiles/avatar.png" alt="avatar">
@@ -52,7 +68,10 @@
                 <%
                     if(loginUser.id == user.id){
                 %>
+                <div class="profile-btn">
                     <a href="">Редактировать</a>
+                    <a href="/api/signout" style="background-color: red;margin-left: 5px;">Выход</a>
+                </div>
                 <%
                     }
                 %>

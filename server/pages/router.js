@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
 
     let selectedCategory = null;
 
-    // Поиск по категории
+    // Фильтрация по категории
     if (catId) {
         const category = await Categories.findOne({ key: catId });
         if (category) {
@@ -37,22 +37,45 @@ router.get('/', async (req, res) => {
     // Подсчет количества отфильтрованных блогов
     const totalBlogs = await Blog.countDocuments(options)
 
-    const blogs = await Blog.find(options) .limit(limit).skip(currentPage * limit).populate('category').populate('author')
+    const blogs = await Blog.find(options).limit(limit).skip(currentPage * limit).populate('category').populate('author')
     const allCategories = await Categories.find()
-    res.render('index', {categories: allCategories, blogs, user: req.user || {}, selectedCategory, pages: Math.ceil(totalBlogs / limit),currentPage});
+    res.render('index', {
+        categories: allCategories,
+        blogs, 
+        user: req.user || {}, 
+        selectedCategory, 
+        pages: Math.ceil(totalBlogs / limit),
+        currentPage});
 });
 
 
 router.get('/login', (req, res) => {
-    res.render('login', {user: req.user ? req.user : {}})
+    res.render('login', {
+        user: req.user ? req.user : {}})
 });
 
 router.get('/register', (req, res) => {
-    res.render('register', {user: req.user ? req.user : {}})
+    res.render('register', {
+        user: req.user ? req.user : {}})
 });
 
 
 router.get('/my_blogs/:id', async (req, res) => {
+    const options = {};
+    const { search, page = 0 } = req.query;
+
+    // Для пагинаций
+    const limit = 3;
+    const currentPage = parseInt(page) || 0;
+
+    // Поиск по заголовку
+    if (search && search.trim().length > 0) {
+        options.$or = [
+            { title: new RegExp(search, 'i') }
+        ];
+        res.locals.search = search;
+    }
+
     const allCategories = await Categories.find();
     try {
         // Ищем пользователя по ID, переданному в URL
@@ -63,15 +86,20 @@ router.get('/my_blogs/:id', async (req, res) => {
             return res.redirect('/not-found');
         }
 
-        // Ищем блоги этого пользователя
-        const blogs = await Blog.find({ author: user._id }).populate('category').populate('author');
+        // Подсчет количества отфильтрованных блогов
+        const totalBlogs = await Blog.countDocuments({author: user._id, ...(options.$or ? { $or: options.$or } : {})}) // Подсчет количества блогов текущего пользователя с учетом поиска
 
+        // Ищем блоги этого пользователя
+        const blogs = await Blog.find({author: user._id, ...(options.$or ? { $or: options.$or } : {})}).limit(limit).skip(currentPage * limit).populate('category').populate('author');
+   
         // Отправляем данные в шаблон
         res.render('my_blogs', {
             categories: allCategories,
             user: req.user ? req.user : {}, // Текущий авторизованный пользователь
             loginUser: req.user, // Текущий пользователь, вошедший в систему
-            blogs
+            blogs,
+            pages: Math.ceil(totalBlogs / limit),
+            currentPage
         });
     } catch (e) {
         console.error(e);
@@ -82,50 +110,19 @@ router.get('/my_blogs/:id', async (req, res) => {
 
 router.get('/new_blogs', async(req, res) => {
     const allCategories = await Categories.find()
-    res.render('new_blogs', {categories: allCategories, user: req.user ? req.user : {}})
-});
-
-
-router.get('/profile_comments', async(req, res) => {
-    const options = {};
-    const { catId } = req.query;
-    let selectedCategory = null; 
-    if (catId) {
-        const category = await Categories.findOne({ key: catId });
-        if (category) {
-            options.category = category._id; 
-            selectedCategory = catId;  
-        }
-    }
-
-    const allCategories = await Categories.find()
-    const blogs = await Blog.find(options).populate('category').populate('author')
-    res.render('profile_comments', {categories: allCategories, user: req.user ? req.user : {}, blogs, selectedCategory })
-});
-
-
-router.get('/loggedout_comments', async(req, res) => {
-    const options = {};
-    const { catId } = req.query;
-    let selectedCategory = null; 
-    if (catId) {
-        const category = await Categories.findOne({ key: catId });
-        if (category) {
-            options.category = category._id; 
-            selectedCategory = catId;  
-        }
-    }
-
-    const allCategories = await Categories.find()
-    const blogs = await Blog.find(options).populate('category').populate('author')
-    res.render('loggedout_comments', {categories: allCategories, user: req.user ? req.user : {}, blogs, selectedCategory})
+    res.render('new_blogs', {
+        categories: allCategories,
+        user: req.user ? req.user : {}})
 });
 
 
 router.get('/edit_blogs/:id', async(req, res) => {
     const allCategories = await Categories.find()
     const blogs = await Blog.findById(req.params.id)
-    res.render('edit_blogs', {categories: allCategories, user: req.user ? req.user : {}, blogs}) //при рендеринге каждой страницы отправляю юзера
+    res.render('edit_blogs', {
+        categories: allCategories, 
+        user: req.user ? req.user : {}, 
+        blogs}) //при рендеринге каждой страницы отправляю юзера
 });
 
 
@@ -141,7 +138,10 @@ router.get('/blog_details/:id', async(req, res) => {
     }
 
     const allCategories = await Categories.find()
-    res.render('blog_details', {item: blog, categories: allCategories, user: req.user ? req.user : {}})
+    res.render('blog_details', {
+        item: blog, 
+        categories: allCategories, 
+        user: req.user ? req.user : {}})
 });
 
 

@@ -18,17 +18,9 @@
                     blogs.forEach(item => { 
                 %>
                 <div class="main-content">
-                    <img src="<%=item.image%>" alt="item1">
+                    <a href='/blog_details/<%=item._id%>'><img src="<%=item.image%>" alt="item1"></a>
                     <div class='more-param'>
-                        <h3><%=item.title%></h3>
-                        <div class="more" onclick="moreFunctions()">
-                            <img src="/images/icons/vector.svg" alt='vector'>
-                            Еще
-                            <div class="editOrDelete">
-                                <a href="">Редактировать</a>
-                                <a href="">Удалить</a>
-                            </div>
-                        </div>
+                        <a href='/blog_details/<%=item._id%>'><h3><%=item.title%></h3></a>
                     </div>
                     <p><%=item.description%></p>
                 </div>
@@ -59,6 +51,7 @@
                     <a href="?<%= queryString %>page=<%= i %>"><%= i + 1 %></a>
                     <% } %>
                 </div>
+                
             </div>
 
             <div class="categories">

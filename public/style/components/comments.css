@@ -1,0 +1,49 @@
+.comments h3{
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.comment-message{
+    margin-top: 30px;
+    background-color: #FFF3CD;
+    padding: 25px 25px;
+    border-radius: 4px;
+    color: #856404;
+    font-family: "Roboto-Medium";
+}
+
+.comment-message a{
+    text-decoration: none;
+    color: #00a2dc;
+}
+
+
+.add-comment-form{
+    margin-top: 30px;
+}
+
+.add-comment-form textarea{
+    width: 100%;
+    resize: none; /*чтобы пользователь не мог увеличивать размер*/
+    height: 100px;
+    margin-top: 10px;
+}
+
+.add-comment-form button{
+    height: 50px;
+    width: 150px;
+    padding: 15px 20px;
+    border: none;
+    background-color: #00A2DC;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 7px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.add-comment-form p{
+    margin: 10px 0;
+}
+
