@@ -4,6 +4,8 @@ const router = express.Router();
 const Categories = require('../Categories/Categories')
 const User = require('../auth/User')
 const Blog = require('../Blogs/Blog')
+const Comment = require('../Comments/Comments')
+
 
 
 router.get('/', async (req, res) => {
@@ -138,10 +140,13 @@ router.get('/blog_details/:id', async(req, res) => {
     }
 
     const allCategories = await Categories.find()
+    const comments = await Comment.find({ blogId: req.params.id }).populate('authorId');
+
     res.render('blog_details', {
         item: blog, 
         categories: allCategories, 
-        user: req.user ? req.user : {}})
+        user: req.user ? req.user : {},
+        comments: comments})
 });
 
 

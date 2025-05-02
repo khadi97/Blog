@@ -9,61 +9,86 @@
     <div class="container">
         <div class="main-form-blog">
             <div class="main-contents">
+                
+                <!-- Пост -->
                 <div class="main-content">
-                    <img src="<%=item.image%>" alt="item1">
+                    <img src="<%= item.image %>" alt="item1">
                     <div class='more-param'>
-                        <h3><%=item.title%></h3>
+                        <h3><%= item.title %></h3>
                         <div class="more" onclick="moreFunctions(event)">
                             <img src="/images/icons/vector.svg" alt='vector'>
                             Еще
                             <div class="editOrDelete">
-                                <a href="/edit_blogs/<%=item._id%>">Редактировать</a>
-                                <a onclick="deleteBlogs('<%=item._id%>', '<%=item.author._id%>')">Удалить</a>
+                                <a href="/edit_blogs/<%= item._id %>">Редактировать</a>
+                                <a onclick="deleteBlogs('<%= item._id %>', '<%= item.author._id %>')">Удалить</a>
                             </div>
                         </div>
                     </div>
-                    <p><%=item.description%></p>
+                    <p><%= item.description %></p>
                 </div>
+
+                <!-- Информация о посте -->
                 <div class="main-content-info">
-                    <div class="content-date"><img src='/images/icons/date.svg' alt="date">26.06.20</div>
-                    <div class="content-visibility"><img src='/images/icons/visibility.svg' alt="visibility">21</div>
-                    <div class="content-message"><img src='/images/icons/message.svg' alt="message">4</div>
+                    <div class="content-date">
+                        <img src='/images/icons/date.svg' alt="date">26.06.20
+                    </div>
+                    <div class="content-visibility">
+                        <img src='/images/icons/visibility.svg' alt="visibility">21
+                    </div>
+                    <div class="content-message">
+                        <img src='/images/icons/message.svg' alt="message">4
+                    </div>
                     <div class="content-forum">
-                        <div><img src='/images/icons/forums.svg' alt="forums"><%=item.category.name%></div>
-                        <div><img src='/images/icons/person.svg' alt="person"><%=item.author.email%></div>
+                        <div>
+                            <img src='/images/icons/forums.svg' alt="forums">
+                            <%= item.category.name %>
+                        </div>
+                        <div>
+                            <img src='/images/icons/person.svg' alt="person">
+                            <%= item.author.email %>
+                        </div>
                     </div>
                 </div>
 
+                <!-- Комментарии -->
                 <div class="comments">
-                    <h3>Комментарий</h3>
-                    <% 
-                        if(user && user._id){
-                    %>
-                    
-                    <form action="" class="add-comment-form">                
-                        <p>Напишите комментарий</p>
-                        <textarea name="text"></textarea>
-                        <button>Сохранить</button>
-                    </form>
-                    <%
-                        } else {
-                    %>
-                    <p class="comment-message">
-                        Чтобы оставить комментарий 
-                        <a href='/register'>зарегистрируйтесь</a>
-                        , или 
-                        <a href='/login'>войдите</a>
-                        в аккаунт.
-                    </p>
-                    <%
-                        }
-                    %>
+                    <% if (user && user._id) { %>
+                        <% if (comments && comments.length) { %>
+                            <h3>Комментарий</h3>
+                            <% comments.forEach(comment => { %>
+                                <div class="comment">
+                                    <div class="comment-owner">
+                                        <img src="/images/profiles/avatar.svg" alt="avatar">
+                                        <h4><%= comment.authorId.fullname %></h4>
+                                    </div>
+                                    <p><%= comment.text %></p>
+                                </div>
+                            <% }) %>
+                        <% } else { %>
+                            <p>Комментариев пока нет.</p>
+                        <% } %>
+
+                        <!-- Форма добавления комментария -->
+                        <form class="add-comment-form" onSubmit="sendComment(event)">
+                            <p>Напишите комментарий</p>
+                            <textarea id='comment-text' placeholder="Введите текст комментария"></textarea>
+                            <input type="hidden" value="<%= user._id %>" id="comment_author">
+                            <input type="hidden" value="<%= item._id %>" id="comment_blog">
+                            <button type="submit">Сохранить</button>
+                        </form>
+                    <% } else { %>
+                        <!-- Сообщение для неавторизованных -->
+                        <p class="comment-message">
+                            Чтобы просматривать и оставлять комментарии, 
+                            <a href='/login'>войдите</a> или 
+                            <a href='/register'>зарегистрируйтесь</a>.
+                        </p>
+                    <% } %>
                 </div>
             </div>
         </div>
     </div>
 
     <%- include('partials/scripts.ejs') %>
-    
 </body>
 </html>

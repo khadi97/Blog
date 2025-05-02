@@ -8,6 +8,7 @@ const app = express();
 
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json())
 
 //основаная настройка для сохранений сессии
 app.use(session({
@@ -35,6 +36,7 @@ app.use(require('./server/Categories/router'))
 app.use(require('./server/pages/router'))
 app.use(require('./server/auth/router'))
 app.use(require('./server/Blogs/router'))
+app.use(require('./server/Comments/router'))
 
 const PORT = 3005;
 app.listen(PORT, () => {

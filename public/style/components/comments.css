@@ -1,10 +1,38 @@
-.comments h3{
-    font-size: 22px;
+.comments h3 {
+    font-size: 24px;
     font-weight: 700;
+    margin-bottom: 30px;
 }
 
-.comment-message{
-    margin-top: 30px;
+.comment {
+    margin: 30px 0;
+    position: relative;
+    padding-bottom: 20px;
+}
+
+.comment::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    width: 100%;
+    background-color: #e7e7e7;
+}
+
+.comment-owner {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    margin-bottom: 15px;
+}
+
+.comment p {
+    margin-bottom: 10px;
+}
+
+.comment-message {
+    margin-top: 50px;
     background-color: #FFF3CD;
     padding: 25px 25px;
     border-radius: 4px;
@@ -12,24 +40,23 @@
     font-family: "Roboto-Medium";
 }
 
-.comment-message a{
+.comment-message a {
     text-decoration: none;
     color: #00a2dc;
 }
 
-
-.add-comment-form{
+.add-comment-form {
     margin-top: 30px;
 }
 
-.add-comment-form textarea{
+.add-comment-form textarea {
     width: 100%;
-    resize: none; /*чтобы пользователь не мог увеличивать размер*/
+    resize: none;
     height: 100px;
     margin-top: 10px;
 }
 
-.add-comment-form button{
+.add-comment-form button {
     height: 50px;
     width: 150px;
     padding: 15px 20px;
@@ -40,10 +67,10 @@
     font-weight: 600;
     border-radius: 7px;
     cursor: pointer;
-    margin-top: 20px;
 }
 
-.add-comment-form p{
-    margin: 10px 0;
+.add-comment-form p {
+    margin: 70px 0px 10px 0px;
+    font-size: 18px;
+    font-weight: 700;
 }
-
