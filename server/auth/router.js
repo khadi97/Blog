@@ -7,4 +7,5 @@ router.post('/api/signup', signUp)
 router.post('/api/signin', passport.authenticate('local' , {failureRedirect: '/login/?error=1'}), signIn)
 router.get('/api/signout', signOut)
 
+
 module.exports = router;

@@ -1,0 +1,25 @@
+<html lang="en">
+<head>
+    <title>Редактировать профиль</title>
+    <%- include('partials/head.ejs') %>
+</head>
+<body>
+    <%- include('partials/header.ejs') %>
+    <div class="container">
+        <div class="main-form-blog">
+            <form action="/profile/edit" method="POST" class="form-blog">
+                <h2>Редактировать профиль</h2>
+                <p>Ваше полное имя: </p>
+                <input type="text" name="fullname" value="<%= user.fullname %>" required>
+                <p>О себе (биография): </p>
+                <textarea name="bio" rows="5" cols="65"><%= user.bio %></textarea>
+                <p>Введите новый пароль (опционально): </p>
+                <input type="password" name="password" >
+                <p>Повторите новый пароль</p>
+                <input type="password" name="re_password">
+                <button class="btn-create" type="submit">Сохранить</button>
+            </form>
+        </div>
+    </div>  
+</body>
+</html>

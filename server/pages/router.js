@@ -5,8 +5,7 @@ const Categories = require('../Categories/Categories')
 const User = require('../auth/User')
 const Blog = require('../Blogs/Blog')
 const Comment = require('../Comments/Comments')
-
-
+const bcrypt = require('bcryptjs');
 
 router.get('/', async (req, res) => {
     const options = {};
@@ -149,5 +148,53 @@ router.get('/blog_details/:id', async(req, res) => {
         comments: comments})
 });
 
+
+router.get('/profile/edit', async (req, res) => {
+    if (!req.user) {
+        return res.redirect('/login');
+    }
+    res.render('edit_profile', { user: req.user });
+});
+
+
+router.post('/profile/edit', async (req, res) => {
+    if (!req.user) {
+        return res.redirect('/login');
+    }
+
+    const { fullname, bio, password, re_password } = req.body;
+
+    try {
+        const user = await User.findById(req.user._id);
+
+        user.fullname = fullname;
+        user.bio = bio;
+
+        if (password || re_password) {
+            if (password !== re_password) {
+                return res.redirect('/profile/edit?error=1'); // пароли не совпадают
+            }
+
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(password, salt);
+            user.password = hashedPassword;
+        }
+
+        await user.save();
+
+        // Обновляем сессию с новыми данными
+        req.login(user, (err) => {
+            if (err) {
+                console.error("Ошибка при обновлении сессии:", err);
+                return res.redirect('/profile/edit?error=2');
+            }
+            res.redirect(`/my_blogs/${req.user._id}`);
+        });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Ошибка сервера');
+    }
+});
 
 module.exports = router;

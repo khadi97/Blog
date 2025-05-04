@@ -25,12 +25,18 @@
                     <p><%=item.description%></p>
                 </div>
                 <div class="main-content-info">
-                    <div class="content-date"><img src='/images/icons/date.svg' alt="date">26.06.20</div>
+                    <div class="content-date"><img src='/images/icons/date.svg' alt="date"><%= new Date(item.createdAt).toLocaleDateString('ru-RU', { timeZone: 'Asia/Almaty' }) %> </div>
                     <div class="content-visibility"><img src='/images/icons/visibility.svg' alt="visibility">21</div>
-                    <div class="content-message"><img src='/images/icons/message.svg' alt="message">4</div>
+                    <div class="content-message"><img src='/images/icons/message.svg' alt="message"><%= item.commentCount %></div>
                     <div class="content-forum">
                         <div><img src='/images/icons/forums.svg' alt="forums"><%=item.category.name%></div>
-                        <div><img src='/images/icons/person.svg' alt="person"><%=item.author.email%></div>
+                        <div><img src='/images/icons/person.svg' alt="person">
+                            <% if (item.author && item.author.email) { %>
+                                <%= item.author.email %>
+                            <% } else { %>
+                                Автор не указан
+                            <% } %></div>
+                       
                     </div>
                 </div>
                 <%
