@@ -44,9 +44,10 @@ const signUp = async (req, res) => {
 
 
 const signIn = (req, res) => {
-        res.redirect(`/my_blogs/${req.user._id}`)
-}
-
+    req.session.userId = req.user._id;
+    res.redirect('/my_blogs/' + req.user._id);
+  };
+  
 
 const signOut = (req, res) => {
     req.logout(function(err){ // Выход из системы. Функция req.logout() удаляет данные сессии пользователя

@@ -1,44 +1,55 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-const mongooseStore = require('connect-mongo')
-const passport = require('passport')
+const mongoose = require('mongoose');
+const MongoStore = require('connect-mongo');
+const passport = require('passport');
+const path = require('path');
+require('dotenv').config();
+
 
 const app = express();
 
-app.use(express.static(__dirname + '/public'));
+// Middleware
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.json())
+app.use(express.json());
 
-//основаная настройка для сохранений сессии
+// Настройка сессий с использованием connect-mongo
 app.use(session({
-    name: 'kinopoisk.session',
-    secret: 'keybord cat', //секретный ключ , будем скрывать инфо о залогиневшемся пользователе
-    maxAge: 1000 * 60 * 60 *7, //макс длительность хранения сессий (1000миллисекунд, 60сек, 60мин, 7дней), условно говоря 1день*7дней
-    resave: false,//чтобы каждый раз инфо не обновлялась
-    store: mongooseStore.create({ //связываем сессию с connect-mongo
-        mongoUrl: 'mongodb://localhost:27017' //ссылку берем в папке server/config/db.js
+    name: 'blog.session',
+    secret: 'keyboard cat',// секретный ключ для шифрования сессий
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 },// срок действия сессии (7 дней)
+    store: MongoStore.create({
+      mongoUrl: 'mongodb://localhost:27017/blog',// URL подключения к MongoDB
+      dbName: 'blog',
+      collectionName: 'sessions'
     })
-}))
-//настройки для passport
-app.use(passport.initialize())
-app.use(passport.session())
+  }));
 
-//для хранения ejs файлов
+
+// Настройка Passport.js
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+// Настройка EJS для отображения шаблонов
 app.set('view engine', 'ejs');
 
+// Подключаем файл маршрутов
+require('./server/config/db');
+require('./server/config/passport'); // Настройка passport для локальной и OAuth авторизации
+app.use(require('./server/Categories/router'));
+app.use(require('./server/pages/router'));
+app.use(require('./server/auth/router'));
+app.use(require('./server/Blogs/router'));
+app.use(require('./server/Comments/router'));
 
-//подключение db.js и passport и router.js
-require('./server/config/db')
-require('./server/config/passport')
 
-app.use(require('./server/Categories/router'))
-app.use(require('./server/pages/router'))
-app.use(require('./server/auth/router'))
-app.use(require('./server/Blogs/router'))
-app.use(require('./server/Comments/router'))
-
+// Старт сервера
 const PORT = 3005;
 app.listen(PORT, () => {
-    console.log(`Server listening on ${PORT}`);
-})
+  console.log(`Server listening on port ${PORT}`);
+});

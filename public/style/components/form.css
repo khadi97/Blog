@@ -20,6 +20,12 @@
     margin-bottom: 40px;
 }
 
+.form p, .form a{
+    margin-top: 10px;
+    font-size: 16px;
+    font-family: "Roboto-Medium";
+}
+
 .fieldset{
     display: flex; 
     flex-direction: column;  
